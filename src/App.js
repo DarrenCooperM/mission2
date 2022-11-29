@@ -47,13 +47,14 @@ function App() {
             src={analysis.URL}
             height="200"
             border="1"
-            alt={
-              analysis.description &&
-              analysis.description.captions &&
-              analysis.description.captions[0].text
-                ? analysis.description.captions[0].text
-                : "can't find caption"
-            }
+            alt="pic"
+            // {
+            // analysis.description &&
+            // analysis.description.captions &&
+            // analysis.description.captions[0].text
+            //   ? analysis.description.captions[0].text
+            //   : "can't find caption"
+            // }
           />
         </div>
         {PrettyPrintJson(analysis)}

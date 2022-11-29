@@ -4,7 +4,7 @@
 import { ComputerVisionClient } from "@azure/cognitiveservices-computervision";
 import { ApiKeyCredentials } from "@azure/ms-rest-js";
 
-import Cars from "./Cars.js";
+// import Cars from "../../backend/Cars.js";
 
 // List of sample images to use in demo
 // import RandomImageUrl from "./DefaultImages";

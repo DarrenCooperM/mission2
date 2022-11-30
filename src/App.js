@@ -49,53 +49,86 @@ function App() {
     //
     const Cars = [
       {
-        URL: "https://storage.googleapis.com/production-yourcar/uploads/Audi_Electric_Car_SUV_Audi_A6_e_Tron_1_88ceaaf48a.jpeg",
-        brands: "Honda",
+        URL: "https://www.carkhabri.com/Gallery/audi/audi-a4/exterior/large/47.jpg",
+        brands: "Audi",
+        version: "A4",
+        price: "$39,999",
       },
       {
         URL: "https://www.aucklandcars.nz/Motorcentral/VehicleData/AUC-44db3dd7-0828-4834-a5e1-3918a8180388-1.jpg?r=638051896795911564",
-        brands: "Audi",
+        brands: "BMW",
+        version: "i8",
+        price: "$39,999",
       },
       {
-        URL: "https://cdn.needacar.co.nz/mc-listing/vehicledata/765383/thumb/0.jpg?sv=2017-04-17&sr=b&si=default&sig=%2FNkfCp8IqdBuNbXJg39JICWYfXWBN9RQXNCZ%2BOisDO4%3D&se=2032-05-06T14%3A44%3A43Z",
-        brands: "red",
+        URL: "https://motorvault.co.uk/assets/image-cache/galleries/213/2207_Audi_RS6_Avant_side_view.f631f0f7.jpg",
+        brands: "Audi",
+        version: "RS6",
+        price: "$39,999",
+      },
+      {
+        URL: "https://cdn.carbuzz.com/gallery-images/2021-audi-q5-side-view-carbuzz-919747-1600.jpg",
+        brands: "Audi",
+        version: "Q5",
+        price: "$39,999",
+      },
+      {
+        URL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5I8QtRGvNxOgCAEcnONyOKshat5Qhl3IYEg&usqp=CAU",
+        brands: "Audi",
+        version: "A1",
+        price: "$39,999",
+      },
+      {
+        URL: "https://cdn.carbuzz.com/gallery-images/2023-audi-a5-coupe-side-view-driving-carbuzz-676384-1600.jpg",
+        brands: "Audi",
+        version: "A5",
+        price: "$39,999",
       },
     ];
     return (
-      <div>
-        <h1> This car is a {data.brands[0].name}</h1>
-        <p>Here is a list of other cars with simular brand</p>
+      <div class="stockContainer">
+        {/* <h1> This car is a {data.brands[0].name}</h1>
+        <h2> Similar cars in our stock:</h2> */}
         {Cars.filter((el) => el.brands === data.brands[0].name).map((el) => (
-          <div>
-            {el.brands}
-            <img src={el.URL} />
+          <div class="processedImgs">
+            <div class="card">
+              <img class="stockImgs" src={el.URL} />
+              <h2 class="titles">
+                {el.brands}
+                <br></br>
+                {el.version}
+              </h2>
+              {/* <h2 class="subTitles">{el.version}</h2> */}
+              <h3 class="price">{el.price}</h3>
+            </div>
           </div>
         ))}
       </div>
-      // <div>
-      //   <pre>{JSON.stringify(data, null, 2)}</pre>
-      // </div>
     );
   };
 
   const DisplayResults = () => {
     return (
-      <div>
-        <h2>Computer Vision Analysis</h2>
-        <div>
-          <img
-            src={analysis.URL}
-            height="200"
-            border="1"
-            alt="pic"
-            // {
-            // analysis.description &&
-            // analysis.description.captions &&
-            // analysis.description.captions[0].text
-            //   ? analysis.description.captions[0].text
-            //   : "can't find caption"
-            // }
-          />
+      <div class="resultsContainer">
+        <div class="userInput">
+          <h2>Computer Vision Analysis</h2>
+          <div>
+            <h3> your upload: </h3>
+            <img
+              src={analysis.URL}
+              height="300"
+              width="500"
+              border="1"
+              alt="pic"
+              // {
+              // analysis.description &&
+              // analysis.description.captions &&
+              // analysis.description.captions[0].text
+              //   ? analysis.description.captions[0].text
+              //   : "can't find caption"
+              // }
+            />
+          </div>
         </div>
         {PrettyPrintJson(analysis)}
       </div>
@@ -104,25 +137,27 @@ function App() {
 
   const Analyze = () => {
     return (
-      <div>
-        <h1>Analyze image</h1>
-        {!processing && (
-          <div>
+      <div class="resultsContainer">
+        <div class="userInput">
+          <h1>FIND YOUR DREAM CAR</h1>
+          {!processing && (
             <div>
-              <label>URL</label>
-              <input
-                type="text"
-                placeholder="Enter URL or leave empty for random image from collection"
-                size="50"
-                onChange={handleChange}
-              ></input>
+              <div>
+                <label>URL</label>
+                <input
+                  type="text"
+                  placeholder="Enter URL or leave empty for random image from collection"
+                  size="50"
+                  onChange={handleChange}
+                ></input>
+              </div>
+              <button onClick={onFileUrlEntered}>Analyze</button>
             </div>
-            <button onClick={onFileUrlEntered}>Analyze</button>
-          </div>
-        )}
-        {processing && <div>Processing</div>}
-        <hr />
-        {analysis && DisplayResults()}
+          )}
+          {processing && <div>Processing</div>}
+          <hr />
+          {analysis && DisplayResults()}
+        </div>
       </div>
     );
   };

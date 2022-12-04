@@ -6,8 +6,9 @@ import "./App.css";
 import {
   computerVision,
   isConfigured as ComputerVisionIsConfigured,
-} from "./azure-cognitiveservices-computervision";
-// import Cars from "../../backend/Cars";
+} from "./components/CarsAPI/CarAPI.js";
+
+import CarsArray from "./components/CarsArray/Cars";
 
 function App() {
   const [fileSelected, setFileSelected] = useState(null);
@@ -18,7 +19,7 @@ function App() {
   const handleChange = (e) => {
     setFileSelected(e.target.value);
   };
-  const onFileUrlEntered = (e) => {
+  const userInputURL = (e) => {
     // hold UI
     setProcessing(true);
     setAnalysis(null);
@@ -40,69 +41,37 @@ function App() {
     });
   };
 
-  // Display JSON data in readable format
-  const PrettyPrintJson = (data) => {
+  const carData = (data) => {
     console.log(data.brands[0].name);
     console.log(data);
     setChangeToArray(data);
     console.log(data);
-    //
-    const Cars = [
-      {
-        URL: "https://www.carkhabri.com/Gallery/audi/audi-a4/exterior/large/47.jpg",
-        brands: "Audi",
-        version: "A4",
-        price: "$39,999",
-      },
-      {
-        URL: "https://www.aucklandcars.nz/Motorcentral/VehicleData/AUC-44db3dd7-0828-4834-a5e1-3918a8180388-1.jpg?r=638051896795911564",
-        brands: "BMW",
-        version: "i8",
-        price: "$39,999",
-      },
-      {
-        URL: "https://motorvault.co.uk/assets/image-cache/galleries/213/2207_Audi_RS6_Avant_side_view.f631f0f7.jpg",
-        brands: "Audi",
-        version: "RS6",
-        price: "$39,999",
-      },
-      {
-        URL: "https://cdn.carbuzz.com/gallery-images/2021-audi-q5-side-view-carbuzz-919747-1600.jpg",
-        brands: "Audi",
-        version: "Q5",
-        price: "$39,999",
-      },
-      {
-        URL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5I8QtRGvNxOgCAEcnONyOKshat5Qhl3IYEg&usqp=CAU",
-        brands: "Audi",
-        version: "A1",
-        price: "$39,999",
-      },
-      {
-        URL: "https://cdn.carbuzz.com/gallery-images/2023-audi-a5-coupe-side-view-driving-carbuzz-676384-1600.jpg",
-        brands: "Audi",
-        version: "A5",
-        price: "$39,999",
-      },
-    ];
     return (
-      <div class="stockContainer">
-        {/* <h1> This car is a {data.brands[0].name}</h1>
+      <div>
+        <h2>Take a look at what we have in stock</h2>
+        <div class="stockContainer">
+          {/* <h1> This car is a {data.brands[0].name}</h1>
         <h2> Similar cars in our stock:</h2> */}
-        {Cars.filter((el) => el.brands === data.brands[0].name).map((el) => (
-          <div class="processedImgs">
-            <div class="card">
-              <img class="stockImgs" src={el.URL} />
-              <h2 class="titles">
-                {el.brands}
-                <br></br>
-                {el.version}
-              </h2>
-              {/* <h2 class="subTitles">{el.version}</h2> */}
-              <h3 class="price">{el.price}</h3>
-            </div>
-          </div>
-        ))}
+          {CarsArray.filter((el) => el.brands === data.brands[0].name).map(
+            (el) => (
+              <div class="processedImgs">
+                <div class="card">
+                  <img class="stockImgs" src={el.URL} />
+                  <h2 class="titles">
+                    {el.brands}
+                    <br></br>
+                    {el.version}
+                  </h2>
+                  {/* <h2 class="subTitles">{el.version}</h2> */}
+                  <p class="content">
+                    <h2 class="odo">ODO: {el.ODO}</h2>
+                    <h2 class="price">{el.price}</h2>
+                  </p>
+                </div>
+              </div>
+            )
+          )}
+        </div>
       </div>
     );
   };
@@ -120,17 +89,10 @@ function App() {
               width="500"
               border="1"
               alt="pic"
-              // {
-              // analysis.description &&
-              // analysis.description.captions &&
-              // analysis.description.captions[0].text
-              //   ? analysis.description.captions[0].text
-              //   : "can't find caption"
-              // }
             />
           </div>
         </div>
-        {PrettyPrintJson(analysis)}
+        {carData(analysis)}
       </div>
     );
   };
@@ -143,18 +105,20 @@ function App() {
           {!processing && (
             <div>
               <div>
-                <label>URL</label>
                 <input
+                  class="inputBox"
                   type="text"
-                  placeholder="Enter URL or leave empty for random image from collection"
+                  placeholder="Enter URL"
                   size="50"
                   onChange={handleChange}
                 ></input>
               </div>
-              <button onClick={onFileUrlEntered}>Analyze</button>
+              <button class="analyzeBtn" onClick={userInputURL}>
+                Analyze
+              </button>
             </div>
           )}
-          {processing && <div>Processing</div>}
+          {processing && <div>LOADING</div>}
           <hr />
           {analysis && DisplayResults()}
         </div>

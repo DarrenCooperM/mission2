@@ -40,6 +40,7 @@
 .resultsContainer {
   padding-left: 2%;
   padding-right: 2%;
+  background: linear-gradient(90deg, #d1f7fc, #8bd3f7, #418aff);
 }
 
 .userInput {
@@ -66,7 +67,11 @@
 
 .inputBox {
   height: 30px;
-  width: 100%;
+  width: 50%;
+}
+
+.inputBox::placeholder {
+  text-align: center;
 }
 
 .card {
@@ -75,6 +80,7 @@
   width: 20rem;
   background-color: slategray;
   border: 1px solid black;
+  cursor: pointer;
 }
 
 .stockImgs {
@@ -90,8 +96,16 @@
   padding-top: 1.5rem;
 }
 
+.content {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  font-size: 0.75rem;
+}
+
 .price {
-  color: rgb(26, 240, 26);
+  color: #61dafb;
 }
 
 .analyzeBtn {
